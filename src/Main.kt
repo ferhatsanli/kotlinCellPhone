@@ -1,4 +1,4 @@
-import com.ferhat.CepTelefonu.CepTelefonu
+import com.ferhat.CepTelefonu.CellPhone
 
 // Bir cep telefonunun bazi özelliklerini yapabilen bir uygulama yapiniz. Bu uygulama ;
 // Rehbere kisi eklevebilmeli, sorgulavabilmeli, kisileri silip güncellevebilmeli
@@ -14,17 +14,18 @@ import com.ferhat.CepTelefonu.CepTelefonu
 * CepTelefonu -> class w/ functions
 * */
 fun main() {
-    var rehber = ArrayList<Kisi>()
-    rehber.add(Kisi("ferhat", "12354643"))
+    var rehber = ArrayList<Person>()
+    rehber.add(Person("ferhat", "12354643"))
     Utils.clearConsole()
-    CepTelefonu.menuAnaMenu()
+    CellPhone.menuMain()
     while (true) {
-        when (CepTelefonu.readChoose()) {
-            1 -> CepTelefonu.menuListele(rehber)
-            2 -> CepTelefonu.menuEkle(rehber)
-            3 -> CepTelefonu.menuGuncelle(rehber)
-            4 -> CepTelefonu.menuSil(rehber)
-            5 -> return
+        when (CellPhone.readChoose()) {
+            1 -> CellPhone.menuList(rehber)
+            2 -> CellPhone.menuAdd(rehber)
+            3 -> CellPhone.menuUpdate(rehber)
+            4 -> CellPhone.menuDelete(rehber)
+            5 -> CellPhone.changeLang()
+            6 -> return
         }
     }
 }
