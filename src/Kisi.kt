@@ -1,0 +1,1 @@
+data class Kisi (var isim: String, var numara: String)
