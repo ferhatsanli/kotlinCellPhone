@@ -1,6 +1,6 @@
 fun main() {
     val yellowPages = ArrayList<Person>()
-    yellowPages.add(Person("ferhat", "13"))
+    yellowPages.add(Person("ferhat", "+311234567"))
     Utils.clearConsole()
     CellPhone.menuMain()
     while (true) {

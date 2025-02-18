@@ -112,8 +112,6 @@ class CellPhone {
         private fun recExists(rec: Person, yellowPages: ArrayList<Person>) : Boolean {
             if (yellowPages.contains(rec)) {
                 println(texts.logRecExists)
-                rec.name = ""
-                rec.number = ""
                 return true
             }
             return false
