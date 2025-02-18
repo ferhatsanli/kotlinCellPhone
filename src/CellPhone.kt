@@ -1,14 +1,4 @@
-package com.ferhat.CepTelefonu
-
-import Person
-import LangEng
-import LangNames
-import LangTur
-import Language
-import Utils
-
 class CellPhone {
-    var currentMenu: Int = 0
     companion object {
         private var texts: Language = LangEng()
 
@@ -20,25 +10,25 @@ class CellPhone {
             println(texts.pressKey)
             readln()
             Utils.clearConsole()
-            this.menuMain()
+            menuMain()
         }
 
         fun readChoose(): Int {
             print(">>")
             val response: String = readln()
             if (response == "") return 0
-            when (Utils.isNumeric(response)) {
-                true -> return response.toInt()
-                false -> return 0
+            return when (Utils.isNumeric(response)) {
+                true -> response.toInt()
+                false -> 0
             }
         }
 
         fun menuList(yellowPages: ArrayList<Person>) {
             println("${texts.name}\t${texts.number}")
-            for (kisi in yellowPages) {
-                println("${kisi.name}:\t${kisi.number}")
+            for (rec in yellowPages) {
+                println("${rec.name}:\t${rec.number}")
             }
-            this.startOver()
+            startOver()
         }
 
         fun menuAdd(yellowPages: ArrayList<Person>) {
@@ -46,31 +36,38 @@ class CellPhone {
             var number: String = ""
 
             println(texts.titleMAdd)
-            print("${texts.name}: ")
-            name = readln()
-            print("${texts.number}: ")
-            number = readln()
+            do{
+                do {
+                    print("${texts.name}: ")
+                    name = readln()
+                } while (name.isEmpty())
+                do {
+                    print("${texts.number}: ")
+                    number = readln()
+                } while (number.isEmpty())
+
+            } while (recExists(Person(name, number), yellowPages))
             yellowPages.add(Person(name, number))
-            this.startOver()
+            startOver()
         }
 
         fun menuUpdate(yellowPages: ArrayList<Person>) {
-            var phrase: String = ""
-            var i_found: Int = -1
+            var phrase = ""
+            var iFound: Int = -1
 
             println(texts.titleMUpdate)
             print("${texts.find}: ")
             phrase = readln()
-            i_found = recFind(phrase, yellowPages)
-            if (i_found != -1) {
-                recUpdate(i_found, yellowPages)
+            iFound = recFind(phrase, yellowPages)
+            if (iFound != -1) {
+                recUpdate(iFound, yellowPages)
                 println(texts.logSucUpdate)
                 println("${texts.newValues}: ")
-                println(yellowPages.get(i_found))
+                println(yellowPages[iFound])
             }
             else
                 println(texts.logRecNotFound)
-            this.startOver()
+            startOver()
         }
 
         fun menuDelete(yellowPages: ArrayList<Person>){
@@ -86,10 +83,10 @@ class CellPhone {
             }
             else
                 println(texts.logRecNotFound)
-            this.startOver()
+            startOver()
         }
 
-        fun recUpdate(index: Int, yellowPages: ArrayList<Person>) {
+        private fun recUpdate(index: Int, yellowPages: ArrayList<Person>) {
             var newName: String?
             var newNumber: String?
             println(texts.infoLeaveEmpty)
@@ -102,7 +99,7 @@ class CellPhone {
             yellowPages[index] = Person(newName, newNumber)
         }
 
-        fun recFind(key: Any, yellowPages: ArrayList<Person>): Int {
+        private fun recFind(key: Any, yellowPages: ArrayList<Person>): Int {
             for (rec in yellowPages)
                 if (rec.name == key)
                     return yellowPages.indexOf(rec)
@@ -112,15 +109,23 @@ class CellPhone {
             return -1
         }
 
+        private fun recExists(rec: Person, yellowPages: ArrayList<Person>) : Boolean {
+            if (yellowPages.contains(rec)) {
+                println(texts.logRecExists)
+                rec.name = ""
+                rec.number = ""
+                return true
+            }
+            return false
+        }
+
         fun changeLang() {
-            if (texts.langName == LangNames.ENGLISH)
-                texts = LangTur()
-            else if (texts.langName == LangNames.TURKISH)
-                texts = LangEng()
-            else
-                return
+            texts = when (texts.langName) {
+                LangNames.ENGLISH -> LangTur()
+                LangNames.TURKISH -> LangEng()
+            }
             Utils.clearConsole()
-            this.startOver()
+            startOver()
         }
     }
 }

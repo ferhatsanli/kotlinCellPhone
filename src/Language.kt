@@ -19,6 +19,7 @@ abstract class Language(val langName: LangNames) {
     abstract val logSucUpdate: String
     abstract val logSucDelete: String
     abstract val logRecNotFound: String
+    abstract val logRecExists: String
 }
 
 class LangEng : Language(LangNames.ENGLISH) {
@@ -63,6 +64,8 @@ class LangEng : Language(LangNames.ENGLISH) {
         get() = "Successfully deleted."
     override val logRecNotFound: String
         get() = "Record not found."
+    override val logRecExists: String
+        get() = "There is already another record exists with same values."
 }
 
 class LangTur : Language(LangNames.TURKISH) {
@@ -107,4 +110,6 @@ class LangTur : Language(LangNames.TURKISH) {
         get() = "Silme islemi basarili."
     override val logRecNotFound: String
         get() = "Kayit bulunamadi."
+    override val logRecExists: String
+        get() = "Ayni degerlere sahip baska bir kayit zaten var."
 }
